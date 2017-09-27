@@ -4,6 +4,8 @@ import uuid # Required for unique book instances
 from django.contrib.auth.models import User
 from datetime import date
 
+
+
 # Create your models here.
 class Genre(models.Model):
     #"""
@@ -27,6 +29,7 @@ class Language(models.Model):
         #String for representing the Model object (in Admin site etc.)
         #"""
         return self.name
+
 
 class Book(models.Model):
     #"""Model representing a book (but not a specific copy of a book)."""
@@ -63,6 +66,7 @@ class Book(models.Model):
         return ', '.join([ genre.name for genre in self.genre.all()[:3] ])
     display_genre.short_description = 'Genre'
 
+
 class BookInstance(models.Model):
     #"""
     #Model representing a specific copy of a book (i.e. that can be borrowed from the library).
@@ -87,11 +91,10 @@ class BookInstance(models.Model):
     )
 
     status = models.CharField(max_length=1, choices=LOAN_STATUS, blank=True, default='m', help_text='Book availability')
-
     #usa a data de disponibilidade do livro para a pesquisa e retorna o id e nome do livro
     class Meta:
         ordering = ["due_back"]
-        permissions = (("can_mark_returned", "Set book as returned"),)  
+        permissions = (("can_mark_returned", "Set book as returned"),)
 
     def __str__(self):
         #"""String for representing the Model object"""
